@@ -23,7 +23,7 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Set any additional class parameters as needed
-        self.t = 0
+        #self.t = 0
 
     def reset(self, destination=None, testing=False):
         """ The reset function is called at the beginning of each trial.
@@ -45,10 +45,9 @@ class LearningAgent(Agent):
             self.alpha = 0
         else:
             # decay epsilon
-            self.t += 1
+            #self.t += 1
             #self.epsilon = 1 - 0.02 * self.t
             self.epsilon -= 0.05
-            #pass
         
         return None
 
@@ -111,12 +110,16 @@ class LearningAgent(Agent):
         ## TO DO ##
         ###########
         # Calculate the maximum Q-value of all actions for a given state
-
-        maxQ = None
         
         maxQ = max(self.Q[state].values())
+        maxQ_index = self.Q[self.state].values().index(maxQ)
         
-        return maxQ 
+        ties = [i for i,x in enumerate(self.Q[state].values()) if x == maxQ]
+        
+        if ties:
+            maxQ_index = random.choice(ties)
+        
+        return maxQ_index 
 
 
     def createQ(self, state):
@@ -158,8 +161,7 @@ class LearningAgent(Agent):
                 action = random.choice(self.valid_actions)
             else:
                 maxQ = self.get_maxQ(self.state)
-                maxQ_index = self.Q[self.state].values().index(maxQ)
-                action = self.Q[self.state].keys()[maxQ_index]
+                action = self.Q[self.state].keys()[maxQ]
             
         return action
 
@@ -211,7 +213,7 @@ def run():
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=False)
+    agent = env.create_agent(LearningAgent, learning=True)
     
     ##############
     # Follow the driving agent
