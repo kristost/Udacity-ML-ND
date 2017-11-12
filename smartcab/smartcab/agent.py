@@ -48,7 +48,7 @@ class LearningAgent(Agent):
             #self.t += 1
             #self.epsilon = 1 - 0.02 * self.t
             self.epsilon -= 0.05
-        
+            
         return None
 
     def build_state(self):
@@ -72,12 +72,9 @@ class LearningAgent(Agent):
         
         # Set 'state' as a tuple of relevant data for the agent
         if inputs['light'] == 'red':
-            state = (inputs['light'], waypoint == 'right' and inputs['left'] != 'forward')
+            state = (inputs['light'], waypoint, inputs['left'] != 'forward')
         else:
-            if waypoint == 'forward':
-                state = (inputs['light'], waypoint)
-            else:
-                state = (inputs['light'], waypoint, inputs['oncoming'] == 'left')
+            state = (inputs['light'], waypoint, inputs['oncoming'] == 'left')
         
         # red, do nothing - unless waypoint is right AND left is None
         # red, waypoint_is_right_and_left_is_none
@@ -229,7 +226,7 @@ def run():
     #   display      - set to False to disable the GUI if PyGame is enabled
     #   log_metrics  - set to True to log trial and simulation results to /logs
     #   optimized    - set to True to change the default log file name
-    sim = Simulator(env, update_delay=0.01, log_metrics=True, display=False)
+    sim = Simulator(env, update_delay=0.01, log_metrics=True, display=False, optimized=True)
     #sim = Simulator(env)
     
     ##############
@@ -237,7 +234,7 @@ def run():
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=10)
+    sim.run(n_test=20)
 
 
 if __name__ == '__main__':
