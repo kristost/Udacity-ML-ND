@@ -49,11 +49,7 @@ class LearningAgent(Agent):
         else:
             # decay epsilon
             self.t += 1
-            #self.epsilon = 1/(self.t**2)
             self.epsilon = math.exp(-0.015*self.t)
-            #self.epsilon = 0.985**self.t
-            #self.epsilon = 1 - decay_rate * self.t
-            #self.epsilon -= 0.05
             
         return None
 
@@ -77,32 +73,8 @@ class LearningAgent(Agent):
         # With the hand-engineered features, this learning process gets entirely negated.
         
         # Set 'state' as a tuple of relevant data for the agent
-        #if inputs['light'] == 'red':
-        #    state = (inputs['light'], waypoint, inputs['left'] != 'forward')
-        #else:
-        #    state = (inputs['light'], waypoint, inputs['oncoming'] == 'left')
-        
-        # red, do nothing - unless waypoint is right AND left is None
-        # red, waypoint_is_right_and_left_is_none
-        # red, waypoint_is_right, left_is_none
-        
-        # red, right, left_is_none == right
-        
-        # red, !right, any() == none
-        
-        # green, waypoint fwd, any() == GOOD 
-        # green, fwd, any() == fwd (I have right of way)
-        
-        # green, waypoint right, oncoming left == BAD
-        # green, right, !left == right (yield to oncoming)
-        
-        # green, waypoint left, oncoming left == GOOD
-        # green, left, left == left (yield to oncoming)
-        
-        # red/green; left, right, forward; true/false
-        # 2, 3, 2
-        
         state = (inputs['light'], waypoint, inputs['oncoming'], inputs['left'])
+        
         return state
 
 
@@ -202,22 +174,6 @@ class LearningAgent(Agent):
 def run(args):
     """ Driving function for running the simulation. 
         Press ESC to close the simulation, or [SPACE] to pause the simulation. """
-
-    # defaults
-    alpha = 0.5
-    epsilon = 1
-    tests = 10
-    global decay_rate
-    decay_rate = 0.01
-    
-    if len(args) > 1:
-        print("setting params")
-        alpha = float(args[1])
-        epsilon = float(args[2])
-        tests = float(args[3])
-        decay_rate = float(args[4])
-        print((alpha, epsilon, tests, decay_rate))
-        #sys.exit()
         
     ##############
     # Create the environment
@@ -233,7 +189,7 @@ def run(args):
     #   learning   - set to True to force the driving agent to use Q-learning
     #    * epsilon - continuous value for the exploration factor, default is 1
     #    * alpha   - continuous value for the learning rate, default is 0.5
-    agent = env.create_agent(LearningAgent, learning=True, alpha=alpha, epsilon=epsilon)
+    agent = env.create_agent(LearningAgent, learning=True, alpha=0.3)
     
     ##############
     # Follow the driving agent
@@ -257,7 +213,7 @@ def run(args):
     # Flags:
     #   tolerance  - epsilon tolerance before beginning testing, default is 0.05 
     #   n_test     - discrete number of testing trials to perform, default is 0
-    sim.run(n_test=tests)
+    sim.run(n_test=20)
 
 
 if __name__ == '__main__':
