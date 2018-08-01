@@ -13,3 +13,5 @@ Ensure that a python 3.5.x environment is installed with the stated versions of 
 This project was developed using Jupyter notebooks 4.3.0 within an Anaconda 4.3.21 environment on Windows 10.
 
 
+Dowload Emo-DB from url
+Datasets used are available from FloydHub (final) and Google Drive (intermediate)
