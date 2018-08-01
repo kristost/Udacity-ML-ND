@@ -12,6 +12,9 @@
 Ensure that a python 3.5.x environment is installed with the stated versions of the above-listed python packages.
 This project was developed using Jupyter notebooks 4.3.0 within an Anaconda 4.3.21 environment on Windows 10.
 
+Dowload Emo-DB from url: http://www.emodb.bilderbar.info/download/download.zip
 
-Dowload Emo-DB from url
-Datasets used are available from FloydHub (final) and Google Drive (intermediate)
+Datasets used for the final model(s) are available from FloydHub: https://www.floydhub.com/kristost/datasets/
+
+Datasets used for initial and intermediate models can be found on Google Drive: https://drive.google.com/drive/folders/1n1DT7cLy0Ajy_idnm54zrNLzXWq97IpY?usp=sharing
+
